@@ -1,2 +1,5 @@
 Readme.md
 *.dockerfile
+.gitignore
+
+__pycache__
