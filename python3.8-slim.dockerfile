@@ -3,7 +3,7 @@ FROM python:3.8-slim
 LABEL maintainer="Tzirtzilakis George <tzirtzi@gmail.com>"
 
 RUN pip install --no-cache-dir "uvicorn[standard]" gunicorn \
-	&& pip install --no-cache-dir fastapi
+	&& pip install --no-cache-dir fastapi pydantic[email]
 
 COPY ./start.sh /start.sh
 RUN chmod +x /start.sh

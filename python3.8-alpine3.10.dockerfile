@@ -4,7 +4,7 @@ LABEL maintainer="Tzirtzilakis George <tzirtzi@gmail.com>"
 
 RUN apk add --no-cache --virtual .build-deps gcc libc-dev make \
     && pip install --no-cache-dir "uvicorn[standard]" gunicorn \
-	&& pip install --no-cache-dir fastapi \
+	&& pip install --no-cache-dir fastapi pydantic[email]\
     && apk del .build-deps gcc libc-dev make
 
 COPY ./start.sh /start.sh
