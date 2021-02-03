@@ -1,3 +1,5 @@
+from enum import Enum
+
 import uvicorn
 from fastapi import FastAPI, Body
 from fastapi.encoders import jsonable_encoder
@@ -72,6 +74,30 @@ async def get_full_name(reqBody: UserNameSchema = Body(...)):
     fullName = f"{userName['firstName'].title()} {userName['lastName'].title()}"
     
     return {"fullname": fullName}
+
+
+# Using Enums (see FastAPI examples) ####################################################
+class ModelName(str, Enum):
+    alexnet = "alexnet"
+    resnet = "resnet"
+    lenet = "lenet"
+
+@app.get("/models/{model_name}")
+async def get_model(model_name: ModelName):
+    if model_name == ModelName.alexnet:
+        return {"model_name": model_name, "message": "Deep Learning FTW!"}
+
+    if model_name.value == "lenet":
+        return {"model_name": model_name, "message": "Yann Le Can (LeCNN) all the images"}
+
+    return {"model_name": model_name, "message": "Have some residuals"}
+
+
+# Even supporting paths...
+@app.get("/file/path/{file_path:path}", response_description="Returns a file path, be carefull of the  double slash when passing the path ie: localhost:8000/file/path//home/johndoe/myfile.txt")
+async def read_file(file_path: str):
+    return {"file_path": file_path}
+
 
 
 # this is for dev purposes, use command line for prod, 
